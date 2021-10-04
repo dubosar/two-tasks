@@ -1,0 +1,279 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Test</title>
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:300">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto:300">
+</head>
+
+<style>
+    html {
+        color: #858585;
+        font-family: Montserrat;
+    }
+
+    .wrapper {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .controls {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .tab-button {
+        border: none;
+        background: none;
+        color: #858585;
+        text-transform: uppercase;
+        margin: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .tab-button.active {
+        color: orange;
+    }
+
+    .tab-button:hover {
+        color: orange;
+    }
+
+    .card {
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .active {
+        background-color: white;
+    }
+
+    .content {
+        display: none;
+        padding: 10px 20px;
+    }
+
+    .content.active {
+        display: block;
+    }
+
+    .font-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "m r"
+            "m ns";
+    }
+
+    #item-m {
+        grid-area: m;
+    }
+
+    #item-r {
+        grid-area: r;
+    }
+
+    #item-ns {
+        grid-area: ns;
+    }
+
+    #item-m .color-block {
+        background: green;
+    }
+
+    #item-r .color-block {
+        background: pink;
+    }
+
+    #item-ns .color-block {
+        background: blue;
+    }
+
+    .grid-item {
+        display: grid;
+        grid-template-columns: 100px auto;
+    }
+
+    .color-block {
+        height: 100px;
+        width: 100px;
+        border-radius: 10px;
+        border: 5px solid #fff;
+        outline: 1px solid #858585;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        opacity: 0.5;
+    }
+
+    .main-block {
+        height: 150px;
+        width: 150px;
+    }
+
+    .color-block b {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .description {
+        padding: 10px;
+        box-sizing: border-box;
+        display: flex;
+        gap: 5px;
+    }
+
+    .active-font .color-block {
+        opacity: 1;
+    }
+
+    .active-font .description {
+        font-weight: bold;
+    }
+
+    #dummy {
+        padding: 10px;
+        margin: 30px auto 0;
+        text-align: center;
+    }
+
+    #dummy.font-m {
+        font-family: Merriweather;
+    }
+
+    #dummy.font-r {
+        font-family: Roboto;
+    }
+
+    #dummy.font-ns {
+        font-family: Noto Sans Regular;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .wrapper {
+            max-width: 100%;
+        }
+
+        .font-grid {
+            display: block !important;
+        }
+
+        .main-block {
+            height: 100px;
+            width: 100px;
+        }
+
+        .font-item {
+            margin: 10px 0;
+        }
+
+        .main-item {
+            display: grid;
+            grid-template-columns: 100px auto;
+        }
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="controls">
+            <button class="tab-button" data-id="myFonts">My fonts</button>
+            <button class="tab-button active" data-id="buyFonts">Buy fonts</button>
+        </div>
+        <fieldset class="card">
+            <legend>Please select one font</legend>
+
+            <div class="contentWrapper">
+                <div class="content" id="myFonts">
+                    There should be my bough fonts.
+                </div>
+                <div class="content active" id="buyFonts">
+                    <div class="font-grid">
+                        <div id="item-m" class="font-item main-item active-font">
+                            <div class="color-block main-block"><b>M</b></div>
+                            <div class="description">
+                                <input type="radio" name="font" value="m" checked onchange="pickFont('m')">
+                                <div>Merriweather project is led by Sorkin Type</div>
+                            </div>
+                        </div>
+                        <div id="item-r" class="font-item grid-item">
+                            <div class="color-block"><b>R</b></div>
+                            <div class="description">
+                                <input type="radio" name="font" value="r" onchange="pickFont('r')">
+                                <div>Roboto doesn't compormise, allowing letters</div>
+                            </div>
+                        </div>
+                        <div id="item-ns" class="font-item grid-item">
+                            <div class="color-block"><b>NS</b></div>
+                            <div class="description">
+                                <input type="radio" name="font" value="ns" onchange="pickFont('ns')">
+                                <div>Noto Sans covers over 30 scripts</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 id="dummy" class="font-m">Some Random dummy text
+                </div>
+            </div>
+    </div>
+    </fieldset>
+    </div>
+
+    <script>
+        // TASK 1
+        const tabs = document.querySelector(".wrapper");
+        const tabButton = document.querySelectorAll(".tab-button");
+        const contents = document.querySelectorAll(".content");
+
+        tabs.onclick = e => {
+            const id = e.target.dataset.id;
+            if (id) {
+                tabButton.forEach(btn => btn.classList.remove("active"));
+                e.target.classList.add("active");
+
+                contents.forEach(content => content.classList.remove("active"));
+                const element = document.getElementById(id);
+                element.classList.add("active");
+            }
+        }
+
+        function pickFont(e, event) {
+            const fontItem = document.querySelectorAll(".font-item");
+            fontItem.forEach(item => item.classList.remove("active-font"));
+            const element = document.getElementById('item-' + e);
+            element.classList.add("active-font");
+
+            const dummy = document.getElementById("dummy");
+            dummy.removeAttribute("class");
+            dummy.classList.add('font-' + e);
+        }
+
+
+        // TASK 2
+        function parseUrl(link) {
+            const url = new URL(link)
+            const { hash, hostname, pathname } = url
+            return { hash, hostname, pathname }
+        }
+        const obj = parseUrl('http://ffwagency.com/do/any.php?a=1#foo')
+        console.log('Parsed url object: ', obj)
+    </script>
+</body>
+
+</html>
